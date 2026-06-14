@@ -335,8 +335,9 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
         errorMessageEl.textContent = "Noe gikk galt. Prøv igjen senere.";
         showState(stateError);
     }
+  }
 
-    // Inline field validation on blur
+  // Inline field validation on blur
     document.getElementById("field-contact-name").addEventListener("blur", function () {
       if (!this.value.trim()) showFieldError("contact-name", "Navn er påkrevd");
     });
