@@ -113,7 +113,7 @@ const testimonials = [
                 </li>
               ))}
             </ul>
-            <a href="/booking" class="block w-full text-center bg-light text-dark py-3 rounded-full font-semibold text-sm hover:bg-primary hover:text-light transition-all duration-200">
+            <a href={`/booking?pakke=${pkg.name.toLowerCase()}`} class="block w-full text-center bg-light text-dark py-3 rounded-full font-semibold text-sm hover:bg-primary hover:text-light transition-all duration-200">
               BOOK {pkg.name}
             </a>
           </div>

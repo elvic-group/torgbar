@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 
 const packages = ["FESTIVAL", "BEDRIFT", "PRIVAT", "BRYGGERI", "EVENT"];
+const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null;
 ---
 
 <Layout
@@ -19,27 +20,143 @@ const packages = ["FESTIVAL", "BEDRIFT", "PRIVAT", "BRYGGERI", "EVENT"];
       <div class="grid lg:grid-cols-3 gap-10 max-w-5xl mx-auto">
         <div class="lg:col-span-1 space-y-3">
           <h3 class="font-display text-2xl text-dark mb-4 tracking-wide">Velg pakke</h3>
-          {packages.map((pkg) => (
-            <button class="w-full text-left p-4 rounded-xl border border-border hover:border-primary hover:bg-primary/5 transition-all group bg-dark text-light">
-              <span class="font-bold text-sm">{pkg}</span>
-              <p class="text-xs text-muted mt-1">Etter avtale</p>
-            </button>
-          ))}
+          {
+            packages.map((pkg) => {
+              const pkgLower = pkg.toLowerCase();
+              const isPreSelected = selectedPakke === pkgLower;
+              return (
+                <button
+                  data-package={pkgLower}
+                  class={`w-full text-left p-4 rounded-xl border transition-all group ${
+                    isPreSelected
+                      ? "bg-primary text-light border-primary btn-selected"
+                      : "bg-dark text-light border-border hover:border-primary hover:bg-primary/5"
+                  }`}
+                >
+                  <span class="font-bold text-sm">{pkg}</span>
+                  <p class="text-xs text-muted mt-1">Etter avtale</p>
+                </button>
+              );
+            })
+          }
         </div>
 
         <div class="lg:col-span-2 bg-dark border border-border rounded-2xl overflow-hidden">
-          <div class="calendly-inline-widget" data-url="https://calendly.com/elvickongolo" style="min-width:320px;height:700px;"></div>
-          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" is:inline></script>
+          <div id="calendly-container" class="p-6">
+            <span
+              id="selected-package-display"
+              class={`text-primary font-bold text-sm mb-4 block ${selectedPakke ? "" : "hidden"}`}
+            >
+              {selectedPakke
+                ? `Valgt pakke: ${packages.find((p) => p.toLowerCase() === selectedPakke) ?? selectedPakke}`
+                : "Velg en pakke"}
+            </span>
+            <div id="calendly-widget" style="min-width:320px;height:700px;"></div>
+          </div>
         </div>
       </div>
 
       <div class="max-w-xl mx-auto mt-16 p-8 bg-dark border border-border rounded-2xl text-center">
         <h3 class="font-display text-2xl text-light mb-2 tracking-wide">Direkte kontakt</h3>
         <p class="text-muted text-sm mb-4">Send oss en e-post, så finner vi en løsning sammen.</p>
-        <a href="mailto:elvickongolo@gmail.com" class="inline-block bg-primary text-light px-6 py-3 rounded-full font-semibold text-sm hover:bg-primary/80 transition-all duration-200">
+        <a
+          href="mailto:elvickongolo@gmail.com"
+          class="inline-block bg-primary text-light px-6 py-3 rounded-full font-semibold text-sm hover:bg-primary/80 transition-all duration-200"
+        >
           SEND E-POST
         </a>
       </div>
     </div>
   </section>
+
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" is:inline></script>
+
+  <script is:inline>
+    const PACKAGES = ["FESTIVAL", "BEDRIFT", "PRIVAT", "BRYGGERI", "EVENT"];
+    const CALENDLY_BASE_URL = "https://calendly.com/elvickongolo";
+    const widgetEl = document.getElementById("calendly-widget");
+    const displayEl = document.getElementById("selected-package-display");
+    const buttons = document.querySelectorAll("[data-package]");
+
+    let selectedPackage = null;
+
+    function packageDisplayName(pkg) {
+      return PACKAGES.find((p) => p.toLowerCase() === pkg) ?? pkg;
+    }
+
+    function updateDisplay() {
+      if (selectedPackage) {
+        displayEl.textContent = "Valgt pakke: " + packageDisplayName(selectedPackage);
+        displayEl.classList.remove("hidden");
+      } else {
+        displayEl.classList.add("hidden");
+      }
+    }
+
+    function updateCalendly() {
+      widgetEl.innerHTML = "";
+
+      const options = {
+        parentElement: widgetEl,
+        url: CALENDLY_BASE_URL,
+      };
+
+      if (selectedPackage) {
+        options.prefill = {
+          customAnswers: {
+            a1: packageDisplayName(selectedPackage),
+          },
+        };
+        options.url =
+          CALENDLY_BASE_URL +
+          "?utm_source=torgbar&utm_medium=website&utm_campaign=" +
+          selectedPackage;
+      }
+
+      Calendly.initInlineWidget(options);
+    }
+
+    function selectPackage(pkg) {
+      if (selectedPackage === pkg) {
+        selectedPackage = null;
+      } else {
+        selectedPackage = pkg;
+      }
+
+      buttons.forEach((btn) => {
+        const isSelected = btn.dataset.package === selectedPackage;
+        btn.className = isSelected
+          ? "w-full text-left p-4 rounded-xl border transition-all group bg-primary text-light border-primary btn-selected"
+          : "w-full text-left p-4 rounded-xl border transition-all group bg-dark text-light border-border hover:border-primary hover:bg-primary/5";
+      });
+
+      updateDisplay();
+      updateCalendly();
+    }
+
+    function init() {
+      const params = new URLSearchParams(window.location.search);
+      const pakkeParam = params.get("pakke")?.toLowerCase();
+
+      if (pakkeParam && PACKAGES.some((p) => p.toLowerCase() === pakkeParam)) {
+        selectPackage(pakkeParam);
+      }
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          selectPackage(btn.dataset.package);
+        });
+      });
+
+      if (!selectedPackage) {
+        updateCalendly();
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  </script>
 </Layout>
