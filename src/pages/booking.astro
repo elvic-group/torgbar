@@ -32,11 +32,11 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
                   class={`w-full text-left p-4 rounded-xl border transition-all group ${
                     isPreSelected
                       ? "bg-primary text-light border-primary btn-selected"
-                      : "bg-dark text-light border-border hover:border-primary hover:bg-primary/5"
+                      : "bg-dark text-light border-border hover:border-primary hover:bg-primary/10"
                   }`}
                 >
                   <span class="font-bold text-sm">{pkg}</span>
-                  <p class="text-xs text-muted mt-1">Etter avtale</p>
+                  <p class="text-xs text-light/50 mt-1">Etter avtale</p>
                 </button>
               );
             })
@@ -87,13 +87,13 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
                   <div>
                     <label for="field-event-date" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Dato *</label>
                     <input type="date" id="field-event-date" name="event_date" required
-                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1" />
+                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1 [color-scheme:dark]" />
                     <p id="error-event-date" class="text-red-400 text-xs mt-1 hidden"></p>
                   </div>
                   <div>
                     <label for="field-location" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Sted *</label>
                     <select id="field-location" name="location" required
-                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light focus:outline-none focus:border-primary transition-colors mt-1 appearance-none">
+                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light focus:outline-none focus:border-primary transition-colors mt-1 appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%23e85d2c%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22m4%206%204%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_0.75rem_center] bg-[length:16px] pr-10">
                       <option value="" disabled selected>Velg sted</option>
                       {locations.map((loc) => <option value={loc}>{loc}</option>)}
                       <option value="Annet">Annet</option>
@@ -207,7 +207,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
         const isSelected = btn.dataset.package === selectedPackage;
         btn.className = isSelected
           ? "w-full text-left p-4 rounded-xl border transition-all group bg-primary text-light border-primary btn-selected"
-          : "w-full text-left p-4 rounded-xl border transition-all group bg-dark text-light border-border hover:border-primary hover:bg-primary/5";
+          : "w-full text-left p-4 rounded-xl border transition-all group bg-dark text-light border-border hover:border-primary hover:bg-primary/10";
       });
     }
 
