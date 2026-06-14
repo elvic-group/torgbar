@@ -32,7 +32,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
                   class={`w-full text-left p-4 rounded-xl border transition-all group ${
                     isPreSelected
                       ? "bg-primary text-light border-primary btn-selected"
-                      : "bg-dark text-light border-border hover:border-primary hover:bg-primary/10"
+                      : "bg-dark text-light border-border hover:border-primary"
                   }`}
                 >
                   <span class="font-bold text-sm">{pkg}</span>
@@ -49,7 +49,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
           <div id="state-no-package" class={selectedPakke ? "hidden" : ""}>
             <div class="text-center py-16">
               <svg class="w-12 h-12 text-light/30 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v10a2 2 0 002-2z" />
               </svg>
               <p class="text-light/50 text-lg">Velg en pakke til venstre for å booke</p>
             </div>
@@ -207,7 +207,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
         const isSelected = btn.dataset.package === selectedPackage;
         btn.className = isSelected
           ? "w-full text-left p-4 rounded-xl border transition-all group bg-primary text-light border-primary btn-selected"
-          : "w-full text-left p-4 rounded-xl border transition-all group bg-dark text-light border-border hover:border-primary hover:bg-primary/10";
+          : "w-full text-left p-4 rounded-xl border transition-all group bg-dark text-light border-border hover:border-primary";
       });
     }
 
@@ -333,10 +333,10 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
         console.error("Booking failed:", err);
         errorMessageEl.textContent = "Noe gikk galt. Prøv igjen senere.";
         showState(stateError);
+      }
     }
-  }
 
-  // Inline field validation on blur
+    // Inline field validation on blur
     document.getElementById("field-contact-name").addEventListener("blur", function () {
       if (!this.value.trim()) showFieldError("contact-name", "Navn er påkrevd");
     });
