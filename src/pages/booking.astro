@@ -178,7 +178,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
   <script is:inline>
     const PACKAGES = ["festival", "bedrift", "privat", "bryggeri", "event"];
     const PACKAGES_DISPLAY = { festival: "Festival", bedrift: "Bedrift", privat: "Privat", bryggeri: "Bryggeri", event: "Event" };
-    const PB_URL = "http://187.124.42.2:8090";
+    const PB_URL = "/api";
 
     // DOM refs
     const stateNoPackage = document.getElementById("state-no-package");
@@ -324,7 +324,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
       };
 
       try {
-        const response = await fetch(`${PB_URL}/api/collections/bookings/records`, {
+        const response = await fetch(`${PB_URL}/booking`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
