@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const packages = ["Festival", "Bedrift", "Privat", "Bryggeri", "Event"];
+---
+
+<Layout
+  title="Booking"
+  description="Book TorgBar til ditt neste arrangement. Velg pakke, dato og sted."
+>
+  <section class="max-w-7xl mx-auto px-6 py-24">
+    <div class="text-center mb-16">
+      <span class="text-amber font-semibold text-sm uppercase tracking-widest">Booking</span>
+      <h1 class="text-3xl md:text-5xl font-black mt-3 mb-4">Book TorgBar til ditt arrangement</h1>
+      <p class="text-muted max-w-xl mx-auto">Velg en pakke og finn en tid som passer. Vi tar kontakt for å bekrefte detaljene.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-10 max-w-5xl mx-auto">
+      <!-- Package selector -->
+      <div class="lg:col-span-1 space-y-3">
+        <h3 class="font-bold text-sm uppercase tracking-wider text-muted mb-4">Velg pakke</h3>
+        {packages.map((pkg) => (
+          <button class="w-full text-left p-4 rounded-xl border border-warm-gray hover:border-amber hover:bg-amber/5 transition-all group">
+            <span class="font-semibold">{pkg}</span>
+            <p class="text-xs text-muted mt-1">Etter avtale</p>
+          </button>
+        ))}
+      </div>
+
+      <!-- Calendly embed -->
+      <div class="lg:col-span-2 bg-white border border-warm-gray rounded-2xl overflow-hidden">
+        <div class="calendly-inline-widget" data-url="https://calendly.com/elvickongolo" style="min-width:320px;height:700px;"></div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" is:inline></script>
+      </div>
+    </div>
+
+    <!-- Contact fallback -->
+    <div class="max-w-xl mx-auto mt-16 p-8 bg-white border border-warm-gray rounded-2xl text-center">
+      <h3 class="font-bold text-lg mb-2">Foretrekker du å ta kontakt direkte?</h3>
+      <p class="text-muted text-sm mb-4">Send oss en e-post, så finner vi en løsning sammen.</p>
+      <a href="mailto:elvickongolo@gmail.com" class="inline-block bg-dark text-cream px-6 py-3 rounded-full font-semibold text-sm hover:bg-amber hover:text-dark transition-colors">
+        Send e-post
+      </a>
+    </div>
+  </section>
+</Layout>
