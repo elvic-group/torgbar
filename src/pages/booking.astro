@@ -48,10 +48,10 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
           <!-- State 1: No package selected -->
           <div id="state-no-package" class={selectedPakke ? "hidden" : ""}>
             <div class="text-center py-16">
-              <svg class="w-12 h-12 text-muted mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <svg class="w-12 h-12 text-light/30 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <p class="text-muted text-lg">Velg en pakke til venstre for å booke</p>
+              <p class="text-light/50 text-lg">Velg en pakke til venstre for å booke</p>
             </div>
           </div>
 
@@ -64,7 +64,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
                 <div>
                   <label for="field-contact-name" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Navn *</label>
                   <input type="text" id="field-contact-name" name="contact_name" required placeholder="Ditt navn"
-                    class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1" />
+                    class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-light/30 focus:outline-none focus:border-primary transition-colors mt-1" />
                   <p id="error-contact-name" class="text-red-400 text-xs mt-1 hidden"></p>
                 </div>
 
@@ -72,13 +72,13 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
                   <div>
                     <label for="field-email" class="text-light/70 text-xs uppercase tracking-wider font-semibold">E-post *</label>
                     <input type="email" id="field-email" name="email" required placeholder="din@epost.no"
-                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1" />
+                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-light/30 focus:outline-none focus:border-primary transition-colors mt-1" />
                     <p id="error-email" class="text-red-400 text-xs mt-1 hidden"></p>
                   </div>
                   <div>
                     <label for="field-phone" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Telefon</label>
                     <input type="tel" id="field-phone" name="phone" placeholder="+47 123 45 678"
-                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1" />
+                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-light/30 focus:outline-none focus:border-primary transition-colors mt-1" />
                     <p id="error-phone" class="text-red-400 text-xs mt-1 hidden"></p>
                   </div>
                 </div>
@@ -87,7 +87,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
                   <div>
                     <label for="field-event-date" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Dato *</label>
                     <input type="date" id="field-event-date" name="event_date" required
-                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1 [color-scheme:dark]" />
+                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-light/30 focus:outline-none focus:border-primary transition-colors mt-1 [color-scheme:dark]" />
                     <p id="error-event-date" class="text-red-400 text-xs mt-1 hidden"></p>
                   </div>
                   <div>
@@ -105,13 +105,13 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
                 <div>
                   <label for="field-guests" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Antall gjester</label>
                   <input type="number" id="field-guests" name="guests" min="0" placeholder="Antall gjester"
-                    class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1" />
+                    class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-light/30 focus:outline-none focus:border-primary transition-colors mt-1" />
                 </div>
 
                 <div>
                   <label for="field-message" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Melding</label>
                   <textarea id="field-message" name="message" rows="3" placeholder="Fortell oss om arrangementet ditt..."
-                    class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1 resize-none"></textarea>
+                    class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-light/30 focus:outline-none focus:border-primary transition-colors mt-1 resize-none"></textarea>
                 </div>
 
                 <button type="submit"
@@ -129,7 +129,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
                 @keyframes spin { to { transform: rotate(360deg); } }
               </style>
               <div style="width:32px;height:32px;border:3px solid #2A2622;border-top-color:#E85D2C;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px"></div>
-              <p class="text-muted text-lg">Sender booking...</p>
+              <p class="text-light/50 text-lg">Sender booking...</p>
             </div>
           </div>
 
@@ -138,7 +138,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
             <div class="text-center py-12">
               <div class="text-5xl mb-4">✅</div>
               <h3 class="font-display text-3xl text-light mb-2 tracking-wide">Takk for din booking!</h3>
-              <p id="success-message" class="text-muted mb-8 max-w-md mx-auto">Vi tar kontakt innen 24 timer for å bekrefte detaljene.</p>
+              <p id="success-message" class="text-light/50 mb-8 max-w-md mx-auto">Vi tar kontakt innen 24 timer for å bekrefte detaljene.</p>
               <button id="btn-new-booking"
                 class="inline-block bg-primary text-light px-6 py-3 rounded-full font-semibold text-sm hover:bg-primary/80 transition-all duration-200">
                 Book en ny pakke
@@ -151,7 +151,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
             <div class="text-center py-12">
               <div class="text-5xl mb-4">❌</div>
               <h3 class="font-display text-3xl text-light mb-2 tracking-wide">Noe gikk galt</h3>
-              <p id="error-message" class="text-muted mb-8 max-w-md mx-auto"></p>
+              <p id="error-message" class="text-light/50 mb-8 max-w-md mx-auto"></p>
               <button id="btn-retry"
                 class="inline-block bg-primary text-light px-6 py-3 rounded-full font-semibold text-sm hover:bg-primary/80 transition-all duration-200">
                 Prøv igjen
@@ -164,7 +164,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
       <!-- Email fallback -->
       <div class="max-w-xl mx-auto mt-16 p-8 bg-dark border border-border rounded-2xl text-center">
         <h3 class="font-display text-2xl text-light mb-2 tracking-wide">Direkte kontakt</h3>
-        <p class="text-muted text-sm mb-4">Send oss en e-post, så finner vi en løsning sammen.</p>
+        <p class="text-light/50 text-sm mb-4">Send oss en e-post, så finner vi en løsning sammen.</p>
         <a
           href="mailto:elvickongolo@gmail.com"
           class="inline-block bg-primary text-light px-6 py-3 rounded-full font-semibold text-sm hover:bg-primary/80 transition-all duration-200"
@@ -259,7 +259,6 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
       let valid = true;
 
       if (!selectedPackage) {
-        // Should not happen since form is hidden without package, but guard anyway
         showState(stateNoPackage);
         return false;
       }
