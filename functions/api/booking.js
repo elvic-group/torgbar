@@ -1,13 +1,7 @@
-interface Env {
-  PB_URL?: string;
-}
-
-export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const pbUrl = context.env.PB_URL || "http://187.124.42.2:8090";
-
+export async function onRequestPost(context) {
   try {
     const body = await context.request.text();
-    const response = await fetch(`${pbUrl}/api/collections/bookings/records`, {
+    const response = await fetch("http://187.124.42.2:8090/api/collections/bookings/records", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body,
@@ -29,9 +23,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       headers: { "Content-Type": "application/json" },
     });
   }
-};
+}
 
-export const onRequestOptions: PagesFunction = async () => {
+export async function onRequestOptions() {
   return new Response(null, {
     status: 204,
     headers: {
@@ -40,4 +34,4 @@ export const onRequestOptions: PagesFunction = async () => {
       "Access-Control-Allow-Headers": "Content-Type",
     },
   });
-};
+}
