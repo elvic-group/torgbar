@@ -321,9 +321,9 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
         status: "Ny",
       };
 
-      // Try PocketBase first
+      // Submit to PocketBase via /api proxy (_worker.js)
       try {
-        const response = await fetch("http://187.124.42.2:8090/api/collections/bookings/records", {
+        const response = await fetch("/api/collections/bookings/records", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -333,8 +333,9 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
           showState(stateSuccess);
           return;
         }
+        console.warn("PocketBase returned non-OK:", response.status);
       } catch (err) {
-        // Mixed content blocked — fall through to email
+        console.warn("PocketBase proxy failed, falling back to email:", err);
       }
 
       // Email fallback
