@@ -62,10 +62,10 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
 
               <div class="space-y-6">
                 <div>
-                  <label for="field-name" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Navn *</label>
-                  <input type="text" id="field-name" name="name" required placeholder="Ditt navn"
+                  <label for="field-contact-name" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Navn *</label>
+                  <input type="text" id="field-contact-name" name="contact_name" required placeholder="Ditt navn"
                     class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1" />
-                  <p id="error-name" class="text-red-400 text-xs mt-1 hidden"></p>
+                  <p id="error-contact-name" class="text-red-400 text-xs mt-1 hidden"></p>
                 </div>
 
                 <div class="grid sm:grid-cols-2 gap-6">
@@ -85,10 +85,10 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
 
                 <div class="grid sm:grid-cols-2 gap-6">
                   <div>
-                    <label for="field-date" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Dato *</label>
-                    <input type="date" id="field-date" name="date" required
+                    <label for="field-event-date" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Dato *</label>
+                    <input type="date" id="field-event-date" name="event_date" required
                       class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1" />
-                    <p id="error-date" class="text-red-400 text-xs mt-1 hidden"></p>
+                    <p id="error-event-date" class="text-red-400 text-xs mt-1 hidden"></p>
                   </div>
                   <div>
                     <label for="field-location" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Sted *</label>
@@ -252,7 +252,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
     }
 
     function clearAllErrors() {
-      ["name", "email", "phone", "date", "location"].forEach(clearFieldError);
+      ["contact-name", "email", "phone", "event-date", "location"].forEach(clearFieldError);
     }
 
     function validateForm() {
@@ -264,13 +264,13 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
         return false;
       }
 
-      const name = document.getElementById("field-name").value.trim();
+      const name = document.getElementById("field-contact-name").value.trim();
       const email = document.getElementById("field-email").value.trim();
-      const date = document.getElementById("field-date").value;
+      const date = document.getElementById("field-event-date").value;
       const location = document.getElementById("field-location").value;
 
       if (!name) {
-        showFieldError("name", "Navn er påkrevd");
+        showFieldError("contact-name", "Navn er påkrevd");
         valid = false;
       }
 
@@ -283,7 +283,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
       }
 
       if (!date) {
-        showFieldError("date", "Dato er påkrevd");
+        showFieldError("event-date", "Dato er påkrevd");
         valid = false;
       }
 
@@ -313,10 +313,10 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
 
       const payload = {
         package: PACKAGES_DISPLAY[selectedPackage] ?? selectedPackage,
-        name: document.getElementById("field-name").value.trim(),
+        contact_name: document.getElementById("field-contact-name").value.trim(),
         email: document.getElementById("field-email").value.trim(),
         phone: document.getElementById("field-phone").value.trim() || "",
-        date: document.getElementById("field-date").value,
+        event_date: document.getElementById("field-event-date").value,
         location: document.getElementById("field-location").value,
         guests: parseInt(document.getElementById("field-guests").value) || 0,
         message: document.getElementById("field-message").value.trim() || "",
@@ -345,11 +345,11 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
     }
 
     // Inline field validation on blur
-    document.getElementById("field-name").addEventListener("blur", function () {
-      if (!this.value.trim()) showFieldError("name", "Navn er påkrevd");
+    document.getElementById("field-contact-name").addEventListener("blur", function () {
+      if (!this.value.trim()) showFieldError("contact-name", "Navn er påkrevd");
     });
-    document.getElementById("field-name").addEventListener("input", function () {
-      clearFieldError("name");
+    document.getElementById("field-contact-name").addEventListener("input", function () {
+      clearFieldError("contact-name");
     });
 
     document.getElementById("field-email").addEventListener("blur", function () {
@@ -361,11 +361,11 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
       clearFieldError("email");
     });
 
-    document.getElementById("field-date").addEventListener("blur", function () {
-      if (!this.value) showFieldError("date", "Dato er påkrevd");
+    document.getElementById("field-event-date").addEventListener("blur", function () {
+      if (!this.value) showFieldError("event-date", "Dato er påkrevd");
     });
-    document.getElementById("field-date").addEventListener("input", function () {
-      clearFieldError("date");
+    document.getElementById("field-event-date").addEventListener("input", function () {
+      clearFieldError("event-date");
     });
 
     document.getElementById("field-location").addEventListener("change", function () {
