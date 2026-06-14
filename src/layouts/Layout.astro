@@ -23,7 +23,7 @@ const { title, description } = Astro.props;
     />
     <title>{title} | TorgBar</title>
     <meta name="description" content={description} />
-    <script>window.PB_URL = "http://187.124.42.2:8090"</script>
+    <script is:inline>window.PB_URL = "http://187.124.42.2:8090"</script>
   </head>
   <body>
     <nav class="fixed top-0 w-full z-50 bg-dark/90 backdrop-blur-md border-b border-border">

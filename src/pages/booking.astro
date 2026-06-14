@@ -178,7 +178,7 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
   <script is:inline>
     const PACKAGES = ["festival", "bedrift", "privat", "bryggeri", "event"];
     const PACKAGES_DISPLAY = { festival: "Festival", bedrift: "Bedrift", privat: "Privat", bryggeri: "Bryggeri", event: "Event" };
-    const PB_URL = window.PB_URL || "http://127.0.0.1:8090";
+    const PB_URL = "http://187.124.42.2:8090";
 
     // DOM refs
     const stateNoPackage = document.getElementById("state-no-package");
