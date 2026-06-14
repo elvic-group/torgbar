@@ -2,88 +2,134 @@
 import Layout from "../layouts/Layout.astro";
 
 const packages = [
-  {
-    name: "Festival",
-    price: "Etter avtale",
-    description: "Perfekt for festivaler og store offentlige arrangementer. Full bar med selvbetjening for festivalgjester.",
-    bestFor: "Festivaler, store publikumsarrangementer",
-    includes: ["Mobil bartrailer", "Merkevareprofilering", "Full meny", "Bemanning", "Tappesystem"],
-    cta: "Book Festival",
-  },
-  {
-    name: "Bedrift",
-    price: "Etter avtale",
-    description: "Imponer teamet med en unik bedriftsfest. Traileren kommer til kontoret eller festlokalet.",
-    bestFor: "Bedriftsfester, teambuilding, lanseringer",
-    includes: ["Mobil bartrailer", "Merkevareprofilering", "Tilpasset meny", "Bemanning", "Tappesystem"],
-    cta: "Book Bedrift",
-  },
-  {
-    name: "Privat",
-    price: "Etter avtale",
-    description: "Gjør bryllupet, bursdagen eller hagenfesten uforglemmelig med din egen ølhenger.",
-    bestFor: "Bryllup, bursdager, private fester",
-    includes: ["Mobil bartrailer", "Merkevareprofilering", "Valgfri meny", "Bemanning", "Tappesystem"],
-    cta: "Book Privat",
-  },
-  {
-    name: "Bryggeri",
-    price: "Etter avtale",
-    description: "Ditt bryggeri får en mobil taproom. Perfekt for lanseringer, tap takeovers og spesialarrangementer.",
-    bestFor: "Lokale bryggerier, lanseringer, spesialarrangementer",
-    includes: ["Mobil bartrailer", "Merkevareprofilering", "Bryggerifokusert meny", "Bemanning", "Markedsføring"],
-    cta: "Book Bryggeri",
-  },
-  {
-    name: "Event",
-    price: "Etter avtale",
-    description: "Fleksibel pakke for alle typer arrangementer. Vi tilpasser oss dine behov.",
-    bestFor: "Generelle arrangementer, messer, konserter",
-    includes: ["Mobil bartrailer", "Grunnleggende profilering", "Standard meny", "Bemanning", "Tappesystem"],
-    cta: "Book Event",
-  },
+  { name: "FESTIVAL", description: "Perfekt for festivaler og store offentlige arrangementer. Full bar med selvbetjening.", bestFor: "Festivaler, store publikumsarrangementer", includes: ["Mobil bartrailer", "Merkevareprofilering", "Full meny", "Bemanning", "Tappesystem"] },
+  { name: "BEDRIFT", description: "Imponer teamet med en unik bedriftsfest. Traileren kommer til kontoret eller festlokalet.", bestFor: "Bedriftsfester, teambuilding, lanseringer", includes: ["Mobil bartrailer", "Merkevareprofilering", "Tilpasset meny", "Bemanning", "Tappesystem"] },
+  { name: "PRIVAT", description: "Gjør bryllupet, bursdagen eller hagenfesten uforglemmelig.", bestFor: "Bryllup, bursdager, private fester", includes: ["Mobil bartrailer", "Merkevareprofilering", "Valgfri meny", "Bemanning", "Tappesystem"] },
+  { name: "BRYGGERI", description: "Ditt bryggeri får en mobil taproom for lanseringer og tap takeovers.", bestFor: "Lokale bryggerier, lanseringer, spesialarrangementer", includes: ["Mobil bartrailer", "Merkevareprofilering", "Bryggerifokusert meny", "Bemanning", "Markedsføring"] },
+  { name: "EVENT", description: "Fleksibel pakke for alle typer arrangementer. Vi tilpasser oss dine behov.", bestFor: "Generelle arrangementer, messer, konserter", includes: ["Mobil bartrailer", "Grunnleggende profilering", "Standard meny", "Bemanning", "Tappesystem"] },
 ];
 
-const locations = ["Tromsø", "Fredrikstad", "Lofoten", "Sortland", "Oslo"];
+const locations = ["TROMSØ", "FREDRIKSTAD", "LOFOTEN", "SORTLAND", "OSLO"];
+const testimonials = [
+  { quote: "TorgBar gjorde festivalen vår komplett. Gjestene elsket selvbetjeningen!", author: "Festivalarrangør, Tromsø" },
+  { quote: "Profesjonelt fra start til slutt. Anbefales på det varmeste for bedriftsfester.", author: "HR-sjef, Oslo" },
+  { quote: "Bryllupet vårt ble snakkisen i hele bygda takket være TorgBar.", author: "Privat kunde, Lofoten" },
+];
 ---
 
 <Layout
   title="Mobil selvbetjent ølhenger"
-  description="TorgBar — lei en mobil ølhenger med selvbetjening til ditt neste arrangement. Vi leverer i Tromsø, Fredrikstad, Lofoten, Sortland og Oslo."
+  description="TorgBar — lei en mobil ølhenger med selvbetjening til ditt neste arrangement. Vi leverer i hele Norge."
 >
-  <!-- Hero -->
-  <section class="relative overflow-hidden bg-dark text-cream">
-    <img
-      src="/trailer.jpg"
-      alt="TorgBar mobil olhenger"
-      class="absolute inset-0 w-full h-full object-cover opacity-40"
-    />
-    <div class="absolute inset-0 bg-gradient-to-br from-dark/90 via-dark/60 to-green/50"></div>
-    <div class="relative max-w-7xl mx-auto px-6 py-24 md:py-36">
-      <div class="max-w-3xl">
-        <span class="inline-block bg-amber/20 text-amber-light px-4 py-1.5 rounded-full text-sm font-medium mb-6">
-          🍺 Mobil bartrailer til leie
+  <!-- 1. HERO — full-bleed dark + image -->
+  <section class="relative min-h-screen flex items-center bg-dark overflow-hidden">
+    <img src="/trailer.jpg" alt="TorgBar mobil ølhenger" class="absolute inset-0 w-full h-full object-cover opacity-30" />
+    <div class="absolute inset-0 bg-gradient-to-r from-dark via-dark/80 to-transparent"></div>
+    <div class="relative max-w-7xl mx-auto px-6 py-32 w-full">
+      <div class="max-w-2xl">
+        <span class="inline-block bg-primary/20 text-primary px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] mb-8">
+          Mobil bartrailer til leie
         </span>
-        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none mb-6">
-          Ølhengeren som gjør<br />
-          <span class="text-amber">arrangementet komplett</span>
+        <h1 class="font-display text-6xl md:text-8xl lg:text-9xl text-light leading-none mb-8">
+          ØLHENGEREN<br />
+          SOM GJØR<br />
+          <span class="text-primary">JOBBEN</span>
         </h1>
-        <p class="text-lg md:text-xl text-cream/70 max-w-xl mb-10 leading-relaxed">
-          Lei TorgBar — en fullt utstyrt mobil ølhenger med selvbetjening. Vi leverer tappesystem, øl, bemanning og merkevareprofilering. Du nyter festen.
+        <p class="text-light/60 text-lg max-w-lg mb-10 leading-relaxed">
+          Lei TorgBar — fullt utstyrt mobil ølhenger med selvbetjening. Vi leverer tappesystem, øl, bemanning og merkevareprofilering. Du nyter festen.
         </p>
         <div class="flex flex-wrap gap-4">
-          <a href="/booking" class="bg-amber text-dark px-8 py-3.5 rounded-full font-bold text-lg hover:bg-amber-light transition-colors">
-            Book nå
+          <a href="/booking" class="inline-block bg-primary text-light px-10 py-4 rounded-full font-bold text-lg hover:bg-primary/80 transition-all duration-200 hover:scale-105">
+            BOOK NÅ
           </a>
-          <a href="#pakker" class="border border-cream/30 text-cream px-8 py-3.5 rounded-full font-semibold text-lg hover:bg-cream/10 transition-colors">
-            Se pakker
+          <a href="#pakker" class="inline-block border border-light/20 text-light px-10 py-4 rounded-full font-semibold text-lg hover:bg-light/10 transition-all duration-200">
+            SE PAKKER
           </a>
         </div>
       </div>
-      <div class="mt-12 flex flex-wrap gap-3 text-sm text-cream/50">
+    </div>
+  </section>
+
+  <!-- 2. PROBLEM STATEMENT — editorial split -->
+  <section class="bg-light py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div>
+          <span class="text-primary font-bold text-xs uppercase tracking-[0.2em]">Hvorfor TorgBar?</span>
+          <h2 class="font-display text-5xl md:text-7xl text-dark mt-4 mb-6 leading-none">
+            DU VIL HA<br />
+            EN FEST FOLK<br />
+            <span class="text-primary">SNAKKER OM</span>
+          </h2>
+          <p class="text-muted text-lg leading-relaxed max-w-md">
+            Å arrangere en fest med bar er stress. Du må finne utstyr, bestille øl, hyre folk, rigge opp — og rydde etterpå. Vi tar hele jobben.
+          </p>
+        </div>
+        <div class="space-y-6">
+          <div class="border-l-2 border-primary pl-6">
+            <p class="text-dark/80 text-lg italic leading-relaxed">"Før TorgBar brukte vi dager på å planlegge bardelen av arrangementene våre. Nå er det én telefonsamtale."</p>
+            <p class="text-muted text-sm mt-2">— Erfaren arrangør</p>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-dark text-light p-6 rounded-2xl">
+              <p class="font-display text-4xl text-primary">1</p>
+              <p class="text-sm text-light/60 mt-1">Telefonsamtale</p>
+            </div>
+            <div class="bg-dark text-light p-6 rounded-2xl">
+              <p class="font-display text-4xl text-primary">0</p>
+              <p class="text-sm text-light/60 mt-1">Stress</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. PACKAGES — BrewDog-style product cards -->
+  <section id="pakker" class="bg-dark py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-wrap items-end justify-between mb-16">
+        <div>
+          <span class="text-primary font-bold text-xs uppercase tracking-[0.2em]">5 pakker</span>
+          <h2 class="font-display text-5xl md:text-7xl text-light mt-4 leading-none">FINN DIN<br /><span class="text-primary">PAKKE</span></h2>
+        </div>
+        <p class="text-light/40 max-w-xs mt-4">Fra festivaler til private fester — vi har en pakke for enhver anledning.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {packages.map((pkg) => (
+          <div class="group bg-dark border border-border rounded-2xl p-8 hover:border-primary transition-all duration-300 hover:-translate-y-1">
+            <span class="inline-block bg-primary/10 text-primary font-bold text-xs px-3 py-1 mb-4 uppercase tracking-wider">{pkg.name}</span>
+            <p class="text-light/70 text-sm leading-relaxed mb-6">{pkg.description}</p>
+            <div class="border-t border-border pt-4 mb-5">
+              <p class="text-xs text-muted uppercase tracking-wider mb-1">Best for</p>
+              <p class="text-sm text-light/50">{pkg.bestFor}</p>
+            </div>
+            <ul class="space-y-2 mb-6">
+              {pkg.includes.map((item) => (
+                <li class="flex items-center gap-2 text-sm text-light/40">
+                  <svg class="text-primary shrink-0" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <a href="/booking" class="block w-full text-center bg-light text-dark py-3 rounded-full font-semibold text-sm hover:bg-primary hover:text-light transition-all duration-200">
+              BOOK {pkg.name}
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. TRUST BAR — locations -->
+  <section class="bg-light py-16 border-b border-border/20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-wrap items-center justify-center gap-6 md:gap-12">
+        <span class="text-muted text-xs uppercase tracking-[0.2em] font-bold">Vi leverer i</span>
         {locations.map((loc) => (
-          <span class="flex items-center gap-1.5 bg-cream/5 px-3 py-1.5 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+          <span class="flex items-center gap-2 text-dark/60 font-semibold text-sm">
+            <svg class="text-primary" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
             {loc}
           </span>
         ))}
@@ -91,84 +137,96 @@ const locations = ["Tromsø", "Fredrikstad", "Lofoten", "Sortland", "Oslo"];
     </div>
   </section>
 
-  <!-- Packages -->
-  <section id="pakker" class="max-w-7xl mx-auto px-6 py-24">
-    <div class="text-center mb-16">
-      <span class="text-amber font-semibold text-sm uppercase tracking-widest">5 pakker</span>
-      <h2 class="text-3xl md:text-5xl font-black mt-3 mb-4">Finn pakken som passer ditt arrangement</h2>
-      <p class="text-muted max-w-xl mx-auto">Fra festivaler til private fester — vi har en pakke for enhver anledning.</p>
-    </div>
-
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {packages.map((pkg) => (
-        <div class="group bg-white border border-warm-gray rounded-2xl p-8 hover:border-amber hover:shadow-lg transition-all">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="bg-amber/10 text-amber font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">{pkg.name}</span>
-            <span class="text-muted text-sm">{pkg.price}</span>
-          </div>
-          <p class="text-dark/80 leading-relaxed mb-5">{pkg.description}</p>
-          <div class="border-t border-warm-gray pt-4 mb-5">
-            <p class="text-xs text-muted uppercase tracking-wider mb-2 font-medium">Best for</p>
-            <p class="text-sm text-dark/70">{pkg.bestFor}</p>
-          </div>
-          <ul class="space-y-2 mb-6">
-            {pkg.includes.map((item) => (
-              <li class="flex items-center gap-2 text-sm text-dark/60">
-                <svg class="text-green shrink-0" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>
-                {item}
-              </li>
-            ))}
-          </ul>
-          <a href="/booking" class="block w-full text-center bg-dark text-cream py-3 rounded-full font-semibold text-sm group-hover:bg-amber group-hover:text-dark transition-colors">
-            {pkg.cta}
-          </a>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section class="bg-white border-y border-warm-gray py-24">
+  <!-- 5. HOW IT WORKS — numbered alternating -->
+  <section class="bg-light py-24 lg:py-32">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <span class="text-green font-semibold text-sm uppercase tracking-widest">Slik fungerer det</span>
-        <h2 class="text-3xl md:text-5xl font-black mt-3 mb-4">Enkelt. Smidig. Proft.</h2>
+      <div class="text-center mb-20">
+        <span class="text-accent font-bold text-xs uppercase tracking-[0.2em]">Slik fungerer det</span>
+        <h2 class="font-display text-5xl md:text-7xl text-dark mt-4 leading-none">BOOK. LEVER.<br /><span class="text-primary">NYT.</span></h2>
       </div>
-      <div class="grid md:grid-cols-3 gap-10">
-        <div class="text-center">
-          <div class="w-16 h-16 bg-amber/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
-            <span class="text-3xl">📅</span>
+      <div class="space-y-20">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="order-2 md:order-1">
+            <span class="font-display text-8xl text-primary/20 leading-none">01</span>
+            <h3 class="font-display text-4xl text-dark mt-2">BOOK</h3>
+            <p class="text-muted mt-4 max-w-md leading-relaxed">Velg pakken som passer, fortell oss om arrangementet ditt, og vi tar det derfra. Ingen skjulte kostnader.</p>
           </div>
-          <h3 class="font-bold text-lg mb-2">1. Book</h3>
-          <p class="text-muted text-sm leading-relaxed">Velg pakken som passer, fortell oss om arrangementet ditt, og vi tar det derfra.</p>
+          <div class="order-1 md:order-2 bg-dark rounded-2xl p-12 text-center">
+            <span class="text-6xl">📅</span>
+          </div>
         </div>
-        <div class="text-center">
-          <div class="w-16 h-16 bg-green/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
-            <span class="text-3xl">🚛</span>
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="bg-dark rounded-2xl p-12 text-center">
+            <span class="text-6xl">🚛</span>
           </div>
-          <h3 class="font-bold text-lg mb-2">2. Vi leverer</h3>
-          <p class="text-muted text-sm leading-relaxed">Traileren ankommer med alt klart — tappesystem, øl, bemanning og merkevareprofilering.</p>
+          <div>
+            <span class="font-display text-8xl text-primary/20 leading-none">02</span>
+            <h3 class="font-display text-4xl text-dark mt-2">VI LEVERER</h3>
+            <p class="text-muted mt-4 max-w-md leading-relaxed">Traileren ankommer med alt klart — tappesystem, øl, bemanning og merkevareprofilering. Plug and play.</p>
+          </div>
         </div>
-        <div class="text-center">
-          <div class="w-16 h-16 bg-amber/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
-            <span class="text-3xl">🍻</span>
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="order-2 md:order-1">
+            <span class="font-display text-8xl text-primary/20 leading-none">03</span>
+            <h3 class="font-display text-4xl text-dark mt-2">NYT</h3>
+            <p class="text-muted mt-4 max-w-md leading-relaxed">Gjestene tapper selv. Du slapper av. Når festen er over, henter vi alt. Du sitter igjen med bare gode minner.</p>
           </div>
-          <h3 class="font-bold text-lg mb-2">3. Nyt</h3>
-          <p class="text-muted text-sm leading-relaxed">Gjestene tapper selv. Du slapper av. Når festen er over, henter vi alt.</p>
+          <div class="order-1 md:order-2 bg-dark rounded-2xl p-12 text-center">
+            <span class="text-6xl">🍻</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="max-w-7xl mx-auto px-6 py-24 text-center">
-    <div class="bg-dark rounded-3xl p-12 md:p-20 text-cream relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-amber/20 to-green/20"></div>
-      <div class="relative">
-        <h2 class="text-3xl md:text-5xl font-black mb-4">Klar for å løfte arrangementet?</h2>
-        <p class="text-cream/60 max-w-lg mx-auto mb-8 text-lg">Bestill TorgBar i dag — vi gjør arrangementet ditt til noe alle snakker om.</p>
-        <a href="/booking" class="inline-block bg-amber text-dark px-10 py-4 rounded-full font-bold text-lg hover:bg-amber-light transition-colors">
-          Book TorgBar nå
+  <!-- 6. TESTIMONIALS — large quote cards -->
+  <section class="bg-dark py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="mb-16">
+        <span class="text-primary font-bold text-xs uppercase tracking-[0.2em]">Hva kundene sier</span>
+        <h2 class="font-display text-5xl md:text-7xl text-light mt-4 leading-none">IKKE TA VÅRT<br /><span class="text-primary">ORD FOR DET</span></h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        {testimonials.map((t) => (
+          <div class="bg-dark border border-border rounded-2xl p-8 hover:border-primary transition-colors">
+            <div class="text-primary text-4xl font-display mb-4">"</div>
+            <p class="text-light/60 text-sm leading-relaxed mb-6">{t.quote}</p>
+            <p class="text-light/40 text-xs uppercase tracking-wider">{t.author}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. LOCATIONS GRID — image-led tiles -->
+  <section class="bg-light py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="mb-16">
+        <span class="text-accent font-bold text-xs uppercase tracking-[0.2em]">Hvor vi leverer</span>
+        <h2 class="font-display text-5xl md:text-7xl text-dark mt-4 leading-none">HELE<br /><span class="text-primary">NORGE</span></h2>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        {locations.map((loc) => (
+          <div class="group bg-dark rounded-2xl p-8 text-center hover:bg-primary transition-colors duration-300 cursor-pointer">
+            <p class="font-display text-2xl text-light group-hover:text-dark transition-colors">{loc}</p>
+            <p class="text-light/30 text-xs mt-2 group-hover:text-dark/60 transition-colors">Levering</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. CTA — bold dark block -->
+  <section class="bg-dark py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <div class="max-w-2xl mx-auto">
+        <h2 class="font-display text-5xl md:text-8xl text-light leading-none mb-6">
+          KLAR FOR Å<br />
+          <span class="text-primary">LØFTE FESTEN?</span>
+        </h2>
+        <p class="text-light/40 text-lg mb-10">Bestill TorgBar i dag. Vi gjør arrangementet ditt til noe alle snakker om.</p>
+        <a href="/booking" class="inline-block bg-primary text-light px-12 py-5 rounded-full font-bold text-xl hover:bg-primary/80 transition-all duration-200 hover:scale-105">
+          BOOK TORGBAR NÅ
         </a>
       </div>
     </div>

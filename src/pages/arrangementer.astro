@@ -2,42 +2,35 @@
 import Layout from "../layouts/Layout.astro";
 
 const events = [
-  { name: "TorgBar Festival", description: "Skreddersydd for festivaler og store publikumsarrangementer. Full selvbetjeningsbar for festivalgjester." },
-  { name: "TorgBar Bedrift", description: "Imponer kunder og kollegaer med en unik bedriftsfest. Vi tar oss av alt." },
-  { name: "TorgBar Privat", description: "Gjør bryllupet, bursdagen eller hagenfesten uforglemmelig." },
-  { name: "TorgBar Bryggeri", description: "Ditt bryggeri får en mobil taproom. Lanseringer, tap takeovers og smakinger." },
-  { name: "TorgBar Event", description: "Fleksibel løsning for messer, konserter, markeder og andre arrangementer." },
+  { name: "TORGBAR FESTIVAL", desc: "Skreddersydd for festivaler og store publikumsarrangementer. Full selvbetjeningsbar." },
+  { name: "TORGBAR BEDRIFT", desc: "Imponer kunder og kollegaer med en unik bedriftsfest." },
+  { name: "TORGBAR PRIVAT", desc: "Gjør bryllupet, bursdagen eller hagenfesten uforglemmelig." },
+  { name: "TORGBAR BRYGGERI", desc: "Ditt bryggeri får en mobil taproom. Lanseringer og tap takeovers." },
+  { name: "TORGBAR EVENT", desc: "Fleksibel løsning for messer, konserter og markeder." },
 ];
-
-const locations = ["Tromsø", "Fredrikstad", "Lofoten", "Sortland", "Oslo"];
+const locations = ["TROMSØ", "FREDRIKSTAD", "LOFOTEN", "SORTLAND", "OSLO"];
 ---
 
-<Layout
-  title="Arrangementer"
-  description="TorgBar leverer til alle typer arrangementer i Norge. Fra festivaler til private fester."
->
-  <section class="max-w-7xl mx-auto px-6 py-24">
-    <div class="text-center mb-16">
-      <span class="text-amber font-semibold text-sm uppercase tracking-widest">Arrangementer</span>
-      <h1 class="text-3xl md:text-5xl font-black mt-3 mb-4">Vi leverer til hele Norge</h1>
-      <p class="text-muted max-w-xl mx-auto">Uansett hvor du er — vi kommer med ølhengeren.</p>
-    </div>
-
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-      {events.map((ev) => (
-        <div class="bg-white border border-warm-gray rounded-2xl p-8 hover:border-amber transition-colors">
-          <h3 class="font-bold text-lg mb-2">{ev.name}</h3>
-          <p class="text-muted text-sm leading-relaxed">{ev.description}</p>
-        </div>
-      ))}
-    </div>
-
-    <div class="max-w-3xl mx-auto">
-      <h2 class="text-2xl font-black text-center mb-8">Lokasjoner vi dekker</h2>
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+<Layout title="Arrangementer" description="TorgBar leverer til alle typer arrangementer i Norge.">
+  <section class="bg-light py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="mb-16">
+        <span class="text-primary font-bold text-xs uppercase tracking-[0.2em]">Arrangementer</span>
+        <h1 class="font-display text-5xl md:text-7xl text-dark mt-4 leading-none">VI LEVERER<br /><span class="text-primary">TIL HELE NORGE</span></h1>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
+        {events.map((ev) => (
+          <div class="bg-dark border border-border rounded-2xl p-8 hover:border-primary transition-colors">
+            <h3 class="font-display text-2xl text-light mb-2 tracking-wide">{ev.name}</h3>
+            <p class="text-light/50 text-sm leading-relaxed">{ev.desc}</p>
+          </div>
+        ))}
+      </div>
+      <h2 class="font-display text-3xl text-dark text-center mb-8 tracking-wide">LOKASJONER</h2>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-3xl mx-auto">
         {locations.map((loc) => (
-          <div class="bg-green/5 border border-green/10 rounded-xl p-4 text-center">
-            <p class="font-bold text-green">{loc}</p>
+          <div class="bg-dark rounded-2xl p-6 text-center hover:bg-primary transition-colors duration-300">
+            <p class="font-display text-xl text-light">{loc}</p>
           </div>
         ))}
       </div>
