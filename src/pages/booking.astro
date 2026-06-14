@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 
 const packages = ["FESTIVAL", "BEDRIFT", "PRIVAT", "BRYGGERI", "EVENT"];
+const locations = ["Tromsø", "Fredrikstad", "Lofoten", "Sortland", "Oslo"];
 const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null;
 ---
 
@@ -14,10 +15,11 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
       <div class="mb-16">
         <span class="text-primary font-bold text-xs uppercase tracking-[0.2em]">Booking</span>
         <h1 class="font-display text-5xl md:text-7xl text-dark mt-4 leading-none">BOOK<br /><span class="text-primary">TORGBAR</span></h1>
-        <p class="text-muted mt-4 max-w-lg">Velg en pakke og finn en tid som passer. Vi tar kontakt for å bekrefte detaljene.</p>
+        <p class="text-muted mt-4 max-w-lg">Velg en pakke og fyll ut skjemaet. Vi tar kontakt innen 24 timer for å bekrefte detaljene.</p>
       </div>
 
       <div class="grid lg:grid-cols-3 gap-10 max-w-5xl mx-auto">
+        <!-- Left column: Package selector -->
         <div class="lg:col-span-1 space-y-3">
           <h3 class="font-display text-2xl text-dark mb-4 tracking-wide">Velg pakke</h3>
           {
@@ -41,21 +43,125 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
           }
         </div>
 
-        <div class="lg:col-span-2 bg-dark border border-border rounded-2xl overflow-hidden">
-          <div id="calendly-container" class="p-6">
-            <span
-              id="selected-package-display"
-              class={`text-primary font-bold text-sm mb-4 block ${selectedPakke ? "" : "hidden"}`}
-            >
-              {selectedPakke
-                ? `Valgt pakke: ${packages.find((p) => p.toLowerCase() === selectedPakke) ?? selectedPakke}`
-                : "Velg en pakke"}
-            </span>
-            <div id="calendly-widget" style="min-width:320px;height:700px;"></div>
+        <!-- Right column: Booking form + states -->
+        <div class="lg:col-span-2 bg-dark border border-border rounded-2xl p-8">
+          <!-- State 1: No package selected -->
+          <div id="state-no-package" class={selectedPakke ? "hidden" : ""}>
+            <div class="text-center py-16">
+              <svg class="w-12 h-12 text-muted mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <p class="text-muted text-lg">Velg en pakke til venstre for å booke</p>
+            </div>
+          </div>
+
+          <!-- State 2: Booking form -->
+          <div id="state-form" class={!selectedPakke ? "hidden" : ""}>
+            <form id="booking-form" novalidate>
+              <input type="hidden" id="field-package" name="package" value={selectedPakke ?? ""} />
+
+              <div class="space-y-6">
+                <div>
+                  <label for="field-name" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Navn *</label>
+                  <input type="text" id="field-name" name="name" required placeholder="Ditt navn"
+                    class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1" />
+                  <p id="error-name" class="text-red-400 text-xs mt-1 hidden"></p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label for="field-email" class="text-light/70 text-xs uppercase tracking-wider font-semibold">E-post *</label>
+                    <input type="email" id="field-email" name="email" required placeholder="din@epost.no"
+                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1" />
+                    <p id="error-email" class="text-red-400 text-xs mt-1 hidden"></p>
+                  </div>
+                  <div>
+                    <label for="field-phone" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Telefon</label>
+                    <input type="tel" id="field-phone" name="phone" placeholder="+47 123 45 678"
+                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1" />
+                    <p id="error-phone" class="text-red-400 text-xs mt-1 hidden"></p>
+                  </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label for="field-date" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Dato *</label>
+                    <input type="date" id="field-date" name="date" required
+                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1" />
+                    <p id="error-date" class="text-red-400 text-xs mt-1 hidden"></p>
+                  </div>
+                  <div>
+                    <label for="field-location" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Sted *</label>
+                    <select id="field-location" name="location" required
+                      class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light focus:outline-none focus:border-primary transition-colors mt-1 appearance-none">
+                      <option value="" disabled selected>Velg sted</option>
+                      {locations.map((loc) => <option value={loc}>{loc}</option>)}
+                      <option value="Annet">Annet</option>
+                    </select>
+                    <p id="error-location" class="text-red-400 text-xs mt-1 hidden"></p>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="field-guests" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Antall gjester</label>
+                  <input type="number" id="field-guests" name="guests" min="0" placeholder="Antall gjester"
+                    class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1" />
+                </div>
+
+                <div>
+                  <label for="field-message" class="text-light/70 text-xs uppercase tracking-wider font-semibold">Melding</label>
+                  <textarea id="field-message" name="message" rows="3" placeholder="Fortell oss om arrangementet ditt..."
+                    class="w-full bg-dark border border-border rounded-xl px-4 py-3 text-light placeholder:text-muted/50 focus:outline-none focus:border-primary transition-colors mt-1 resize-none"></textarea>
+                </div>
+
+                <button type="submit"
+                  class="w-full bg-primary text-light py-3 rounded-full font-bold hover:bg-primary/80 transition-all duration-200 disabled:opacity-50">
+                  SEND BOOKING
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- State 3: Submitting -->
+          <div id="state-submitting" class="hidden">
+            <div class="text-center py-16">
+              <style>
+                @keyframes spin { to { transform: rotate(360deg); } }
+              </style>
+              <div style="width:32px;height:32px;border:3px solid #2A2622;border-top-color:#E85D2C;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px"></div>
+              <p class="text-muted text-lg">Sender booking...</p>
+            </div>
+          </div>
+
+          <!-- State 4: Success -->
+          <div id="state-success" class="hidden">
+            <div class="text-center py-12">
+              <div class="text-5xl mb-4">✅</div>
+              <h3 class="font-display text-3xl text-light mb-2 tracking-wide">Takk for din booking!</h3>
+              <p class="text-muted mb-8 max-w-md mx-auto">Vi tar kontakt innen 24 timer for å bekrefte detaljene.</p>
+              <button id="btn-new-booking"
+                class="inline-block bg-primary text-light px-6 py-3 rounded-full font-semibold text-sm hover:bg-primary/80 transition-all duration-200">
+                Book en ny pakke
+              </button>
+            </div>
+          </div>
+
+          <!-- State 5: Error -->
+          <div id="state-error" class="hidden">
+            <div class="text-center py-12">
+              <div class="text-5xl mb-4">❌</div>
+              <h3 class="font-display text-3xl text-light mb-2 tracking-wide">Noe gikk galt</h3>
+              <p id="error-message" class="text-muted mb-8 max-w-md mx-auto"></p>
+              <button id="btn-retry"
+                class="inline-block bg-primary text-light px-6 py-3 rounded-full font-semibold text-sm hover:bg-primary/80 transition-all duration-200">
+                Prøv igjen
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
+      <!-- Email fallback -->
       <div class="max-w-xl mx-auto mt-16 p-8 bg-dark border border-border rounded-2xl text-center">
         <h3 class="font-display text-2xl text-light mb-2 tracking-wide">Direkte kontakt</h3>
         <p class="text-muted text-sm mb-4">Send oss en e-post, så finner vi en løsning sammen.</p>
@@ -69,51 +175,51 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
     </div>
   </section>
 
-  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" is:inline></script>
-
   <script is:inline>
-    const PACKAGES = ["FESTIVAL", "BEDRIFT", "PRIVAT", "BRYGGERI", "EVENT"];
-    const CALENDLY_BASE_URL = "https://calendly.com/elvickongolo";
-    const widgetEl = document.getElementById("calendly-widget");
-    const displayEl = document.getElementById("selected-package-display");
-    const buttons = document.querySelectorAll("[data-package]");
+    const PACKAGES = ["festival", "bedrift", "privat", "bryggeri", "event"];
+    const PACKAGES_DISPLAY = { festival: "Festival", bedrift: "Bedrift", privat: "Privat", bryggeri: "Bryggeri", event: "Event" };
+    const PB_URL = window.PB_URL || "http://127.0.0.1:8090";
 
-    let selectedPackage = null;
+    // DOM refs
+    const stateNoPackage = document.getElementById("state-no-package");
+    const stateForm = document.getElementById("state-form");
+    const stateSubmitting = document.getElementById("state-submitting");
+    const stateSuccess = document.getElementById("state-success");
+    const stateError = document.getElementById("state-error");
+    const errorMessageEl = document.getElementById("error-message");
+    const bookingForm = document.getElementById("booking-form");
+    const packageField = document.getElementById("field-package");
+    const packageButtons = document.querySelectorAll("[data-package]");
+    const btnNewBooking = document.getElementById("btn-new-booking");
+    const btnRetry = document.getElementById("btn-retry");
 
-    function packageDisplayName(pkg) {
-      return PACKAGES.find((p) => p.toLowerCase() === pkg) ?? pkg;
+    let selectedPackage = packageField.value || null;
+
+    const allStates = [stateNoPackage, stateForm, stateSubmitting, stateSuccess, stateError];
+
+    function showState(state) {
+      allStates.forEach((el) => el.classList.add("hidden"));
+      state.classList.remove("hidden");
     }
 
-    function updateDisplay() {
+    function updatePackageButtons() {
+      packageButtons.forEach((btn) => {
+        const isSelected = btn.dataset.package === selectedPackage;
+        btn.className = isSelected
+          ? "w-full text-left p-4 rounded-xl border transition-all group bg-primary text-light border-primary btn-selected"
+          : "w-full text-left p-4 rounded-xl border transition-all group bg-dark text-light border-border hover:border-primary hover:bg-primary/5";
+      });
+    }
+
+    function updateUIForPackage() {
+      updatePackageButtons();
+      packageField.value = selectedPackage ?? "";
+
       if (selectedPackage) {
-        displayEl.textContent = "Valgt pakke: " + packageDisplayName(selectedPackage);
-        displayEl.classList.remove("hidden");
+        showState(stateForm);
       } else {
-        displayEl.classList.add("hidden");
+        showState(stateNoPackage);
       }
-    }
-
-    function updateCalendly() {
-      widgetEl.innerHTML = "";
-
-      const options = {
-        parentElement: widgetEl,
-        url: CALENDLY_BASE_URL,
-      };
-
-      if (selectedPackage) {
-        options.prefill = {
-          customAnswers: {
-            a1: packageDisplayName(selectedPackage),
-          },
-        };
-        options.url =
-          CALENDLY_BASE_URL +
-          "?utm_source=torgbar&utm_medium=website&utm_campaign=" +
-          selectedPackage;
-      }
-
-      Calendly.initInlineWidget(options);
     }
 
     function selectPackage(pkg) {
@@ -122,35 +228,178 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
       } else {
         selectedPackage = pkg;
       }
-
-      buttons.forEach((btn) => {
-        const isSelected = btn.dataset.package === selectedPackage;
-        btn.className = isSelected
-          ? "w-full text-left p-4 rounded-xl border transition-all group bg-primary text-light border-primary btn-selected"
-          : "w-full text-left p-4 rounded-xl border transition-all group bg-dark text-light border-border hover:border-primary hover:bg-primary/5";
-      });
-
-      updateDisplay();
-      updateCalendly();
+      updateUIForPackage();
     }
 
+    function clearFieldError(fieldName) {
+      const input = document.getElementById(`field-${fieldName}`);
+      const error = document.getElementById(`error-${fieldName}`);
+      if (input) input.classList.remove("border-red-500");
+      if (error) {
+        error.classList.add("hidden");
+        error.textContent = "";
+      }
+    }
+
+    function showFieldError(fieldName, message) {
+      const input = document.getElementById(`field-${fieldName}`);
+      const error = document.getElementById(`error-${fieldName}`);
+      if (input) input.classList.add("border-red-500");
+      if (error) {
+        error.textContent = message;
+        error.classList.remove("hidden");
+      }
+    }
+
+    function clearAllErrors() {
+      ["name", "email", "phone", "date", "location"].forEach(clearFieldError);
+    }
+
+    function validateForm() {
+      let valid = true;
+
+      if (!selectedPackage) {
+        // Should not happen since form is hidden without package, but guard anyway
+        showState(stateNoPackage);
+        return false;
+      }
+
+      const name = document.getElementById("field-name").value.trim();
+      const email = document.getElementById("field-email").value.trim();
+      const date = document.getElementById("field-date").value;
+      const location = document.getElementById("field-location").value;
+
+      if (!name) {
+        showFieldError("name", "Navn er påkrevd");
+        valid = false;
+      }
+
+      if (!email) {
+        showFieldError("email", "E-post er påkrevd");
+        valid = false;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showFieldError("email", "Ugyldig e-postadresse");
+        valid = false;
+      }
+
+      if (!date) {
+        showFieldError("date", "Dato er påkrevd");
+        valid = false;
+      }
+
+      if (!location) {
+        showFieldError("location", "Sted er påkrevd");
+        valid = false;
+      }
+
+      return valid;
+    }
+
+    function resetForm() {
+      selectedPackage = null;
+      bookingForm.reset();
+      packageField.value = "";
+      clearAllErrors();
+      updateUIForPackage();
+    }
+
+    async function submitBooking(e) {
+      e.preventDefault();
+      clearAllErrors();
+
+      if (!validateForm()) return;
+
+      showState(stateSubmitting);
+
+      const payload = {
+        package: PACKAGES_DISPLAY[selectedPackage] ?? selectedPackage,
+        name: document.getElementById("field-name").value.trim(),
+        email: document.getElementById("field-email").value.trim(),
+        phone: document.getElementById("field-phone").value.trim() || "",
+        date: document.getElementById("field-date").value,
+        location: document.getElementById("field-location").value,
+        guests: parseInt(document.getElementById("field-guests").value) || 0,
+        message: document.getElementById("field-message").value.trim() || "",
+        status: "Ny",
+      };
+
+      try {
+        const response = await fetch(`${PB_URL}/api/collections/bookings/records`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+          showState(stateSuccess);
+        } else {
+          const err = await response.json();
+          const msg = err?.data ? Object.values(err.data).flat().join(", ") : err?.message || "En ukjent feil oppstod";
+          errorMessageEl.textContent = msg;
+          showState(stateError);
+        }
+      } catch (err) {
+        errorMessageEl.textContent = "Kunne ikke koble til serveren. Sjekk nettverkstilkoblingen din.";
+        showState(stateError);
+      }
+    }
+
+    // Inline field validation on blur
+    document.getElementById("field-name").addEventListener("blur", function () {
+      if (!this.value.trim()) showFieldError("name", "Navn er påkrevd");
+    });
+    document.getElementById("field-name").addEventListener("input", function () {
+      clearFieldError("name");
+    });
+
+    document.getElementById("field-email").addEventListener("blur", function () {
+      const val = this.value.trim();
+      if (!val) showFieldError("email", "E-post er påkrevd");
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) showFieldError("email", "Ugyldig e-postadresse");
+    });
+    document.getElementById("field-email").addEventListener("input", function () {
+      clearFieldError("email");
+    });
+
+    document.getElementById("field-date").addEventListener("blur", function () {
+      if (!this.value) showFieldError("date", "Dato er påkrevd");
+    });
+    document.getElementById("field-date").addEventListener("input", function () {
+      clearFieldError("date");
+    });
+
+    document.getElementById("field-location").addEventListener("change", function () {
+      if (this.value) clearFieldError("location");
+    });
+
+    // Package button clicks
+    packageButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        selectPackage(btn.dataset.package);
+      });
+    });
+
+    // Form submit
+    bookingForm.addEventListener("submit", submitBooking);
+
+    // Reset / retry buttons
+    btnNewBooking.addEventListener("click", resetForm);
+    btnRetry.addEventListener("click", () => {
+      showState(stateForm);
+      clearAllErrors();
+    });
+
+    // Pre-select from URL on load
     function init() {
       const params = new URLSearchParams(window.location.search);
       const pakkeParam = params.get("pakke")?.toLowerCase();
 
-      if (pakkeParam && PACKAGES.some((p) => p.toLowerCase() === pakkeParam)) {
-        selectPackage(pakkeParam);
+      if (pakkeParam && PACKAGES.includes(pakkeParam) && !selectedPackage) {
+        selectedPackage = pakkeParam;
+        packageField.value = pakkeParam;
       }
 
-      buttons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          selectPackage(btn.dataset.package);
-        });
-      });
-
-      if (!selectedPackage) {
-        updateCalendly();
-      }
+      updateUIForPackage();
     }
 
     if (document.readyState === "loading") {
