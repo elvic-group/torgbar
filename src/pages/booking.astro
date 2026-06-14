@@ -321,43 +321,19 @@ const selectedPakke = Astro.url.searchParams.get("pakke")?.toLowerCase() ?? null
         status: "Ny",
       };
 
-      // Submit to PocketBase via /api proxy (_worker.js)
       try {
-        const response = await fetch("/api/collections/bookings/records", {
+        const response = await fetch("https://torgbar-api.elvickongolo.workers.dev/api/collections/bookings/records", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-        if (response.ok) {
-          document.getElementById("success-message").textContent = "Vi tar kontakt innen 24 timer for å bekrefte detaljene.";
-          showState(stateSuccess);
-          return;
-        }
-        console.warn("PocketBase returned non-OK:", response.status);
+        if (!response.ok) throw new Error(`Server returned ${response.status}`);
+        document.getElementById("success-message").textContent = "Vi tar kontakt innen 24 timer for å bekrefte detaljene.";
+        showState(stateSuccess);
       } catch (err) {
-        console.warn("PocketBase proxy failed, falling back to email:", err);
-      }
-
-      // Email fallback
-      const subject = "TorgBar Booking: " + payload.package;
-      const body = [
-        "Pakke: " + payload.package,
-        "Navn: " + payload.contact_name,
-        "E-post: " + payload.email,
-        "Telefon: " + (payload.phone || "Ikke oppgitt"),
-        "Dato: " + payload.event_date,
-        "Sted: " + payload.location,
-        "Antall gjester: " + (payload.guests || "Ikke oppgitt"),
-        "Melding: " + (payload.message || "Ingen"),
-        "",
-        "---",
-        "Sendt fra TorgBar bookingsystem",
-      ].join("%0D%0A");
-
-      window.location.href = "mailto:elvickongolo@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + body;
-
-      document.getElementById("success-message").textContent = "E-postklient åpnet. Send e-posten for å fullføre bookingen.";
-      showState(stateSuccess);
+        console.error("Booking failed:", err);
+        errorMessageEl.textContent = "Noe gikk galt. Prøv igjen senere.";
+        showState(stateError);
     }
 
     // Inline field validation on blur
